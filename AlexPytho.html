@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlexPython - Страница программиста</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Consolas', monospace;
+        }
+        
+        :root {
+            --primary: #0a192f;
+            --secondary: #112240;
+            --accent: #64ffda;
+            --text: #ccd6f6;
+            --text-light: #8892b0;
+        }
+        
+        body {
+            background-color: var(--primary);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Анимированный фон */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.05;
+            background-image: 
+                linear-gradient(90deg, transparent 24px, transparent 25px, rgba(100, 255, 218, 0.1) 25px, rgba(100, 255, 218, 0.1) 26px, transparent 26px, transparent 74px, transparent 75px, rgba(100, 255, 218, 0.1) 75px, rgba(100, 255, 218, 0.1) 76px, transparent 76px),
+                linear-gradient(0deg, transparent 24px, transparent 25px, rgba(100, 255, 218, 0.1) 25px, rgba(100, 255, 218, 0.1) 26px, transparent 26px, transparent 74px, transparent 75px, rgba(100, 255, 218, 0.1) 75px, rgba(100, 255, 218, 0.1) 76px, transparent 76px);
+            background-size: 100px 100px;
+            animation: moveGrid 20s linear infinite;
+        }
+        
+        @keyframes moveGrid {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        /* Хедер */
+        header {
+            padding: 40px 0 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .logo-icon {
+            color: var(--accent);
+            font-size: 2.5rem;
+        }
+        
+        .logo-text {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent), #4dffb8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .tagline {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .tagline::before {
+            content: ">>> ";
+            color: var(--accent);
+        }
+        
+        /* Основной контент */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .info-card {
+            background-color: var(--secondary);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px -15px rgba(2, 12, 27, 0.7);
+        }
+        
+        .card-title {
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-title i {
+            font-size: 1.3rem;
+        }
+        
+        .contact-list {
+            list-style: none;
+        }
+        
+        .contact-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .contact-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(100, 255, 218, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+        
+        .contact-details {
+            flex-grow: 1;
+        }
+        
+        .contact-platform {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+        
+        .contact-link {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            word-break: break-all;
+        }
+        
+        .contact-link:hover {
+            color: var(--accent);
+        }
+        
+        .contact-link i {
+            margin-left: 8px;
+            font-size: 0.9rem;
+            transition: transform 0.3s;
+        }
+        
+        .contact-link:hover i {
+            transform: translateX(5px);
+        }
+        
+        .code-container {
+            background-color: #1e2a47;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            overflow-x: auto;
+            border-left: 3px solid var(--accent);
+        }
+        
+        .code-line {
+            margin-bottom: 8px;
+            display: flex;
+        }
+        
+        .line-number {
+            color: var(--text-light);
+            min-width: 30px;
+            text-align: right;
+            margin-right: 15px;
+            user-select: none;
+        }
+        
+        .code-keyword {
+            color: #ff79c6;
+        }
+        
+        .code-function {
+            color: #50fa7b;
+        }
+        
+        .code-string {
+            color: #f1fa8c;
+        }
+        
+        .code-comment {
+            color: #6272a4;
+        }
+        
+        /* Футер */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid rgba(100, 255, 218, 0.2);
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .footer-text {
+            margin-bottom: 10px;
+        }
+        
+        .heart {
+            color: #ff5555;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        /* Анимация печатания */
+        .typing-animation {
+            overflow: hidden;
+            border-right: 3px solid var(--accent);
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: 2px;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--accent); }
+        }
+        
+        /* Эффекты для ссылок */
+        .glow-effect {
+            position: relative;
+        }
+        
+        .glow-effect::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        .glow-effect:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Анимированный фон -->
+    <div class="bg-animation"></div>
+    
+    <div class="container">
+        <!-- Шапка -->
+        <header>
+            <div class="logo">
+                <i class="fas fa-code logo-icon"></i>
+                <h1 class="logo-text">AlexPython</h1>
+            </div>
+            <p class="tagline typing-animation">Кодинг, гейминг, 3д печать, музыка - моё всё</p>
+        </header>
+        
+        <!-- Основной контент -->
+        <main class="main-content">
+            <!-- Контакты -->
+            <section class="info-card">
+                <h2 class="card-title"><i class="fas fa-network-wired"></i> Мои контакты</h2>
+                <ul class="contact-list">
+                    <li class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-steam"></i>
+                        </div>
+                        <div class="contact-details">
+                            <div class="contact-platform">Steam</div>
+                            <a href="https://steamcommunity.com/profiles/76561199043745353/" target="_blank" class="contact-link glow-effect">
+                                https://steamcommunity.com/profiles/76561199043745353/
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-discord"></i>
+                        </div>
+                        <div class="contact-details">
+                            <div class="contact-platform">Discord</div>
+                            <a href="https://discord.com/users/techno_python" target="_blank" class="contact-link glow-effect">
+                                techno_python
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-telegram"></i>
+                        </div>
+                        <div class="contact-details">
+                            <div class="contact-platform">Telegram</div>
+                            <a href="https://t.me/AlexPytho" target="_blank" class="contact-link glow-effect">
+                                @AlexPytho
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+            
+            <!-- Информация -->
+            <section class="info-card">
+                <h2 class="card-title"><i class="fas fa-terminal"></i> Обо мне</h2>
+                <div class="code-container">
+                    <div class="code-line">
+                        <span class="line-number">1</span>
+                        <span class="code-keyword">class</span> <span class="code-function">Developer</span>:
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">2</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">def</span> <span class="code-function">__init__</span>(self):
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">3</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.name = <span class="code-string">"Alexander"</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">4</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.skills = [<span class="code-string">"Python"</span>, <span class="code-string">"C++"</span>, <span class="code-string">"3D printing"</span>]
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">5</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.interests = [<span class="code-string">"Gaming"</span>, <span class="code-string">"Tech"</span>, <span class="code-string">"Coding"</span>]
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">6</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.steam = <span class="code-string">"https://steamcommunity.com/profiles/76561199043745353/"</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">7</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.discord = <span class="code-string">"techno_python"</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">8</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.telegram = <span class="code-string">"@AlexPytho"</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">9</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">10</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">def</span> <span class="code-function">connect</span>(self):
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">11</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Свяжитесь со мной через любой из контактов выше</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">12</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-string">"Буду рад новым знакомствам!"</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">13</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">14</span>
+                        <span class="code-comment"># Инициализация</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">15</span>
+                        me = Developer()
+                    </div>
+                    <div class="code-line">
+                        <span class="line-number">16</span>
+                        print(me.connect())
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Подвал -->
+        <footer>
+            <p class="footer-text">Страница создана с <span class="heart">❤</span> с небольшой помощью DeepSeek</p>
+            <p>© 2026 Александр. Все контакты актуальны.</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Добавляем эффект печатания для дополнительных элементов
+        document.addEventListener('DOMContentLoaded', function() {
+            // Анимация для элементов контактов при загрузке
+            const contactItems = document.querySelectorAll('.contact-item');
+            contactItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, 300 + (index * 200));
+            });
+            
+            // Эффект для карточек
+            const cards = document.querySelectorAll('.info-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 200 + (index * 300));
+            });
+            
+            // Эффект для логотипа
+            const logoText = document.querySelector('.logo-text');
+            logoText.style.opacity = '0';
+            
+            setTimeout(() => {
+                logoText.style.transition = 'opacity 1s ease';
+                logoText.style.opacity = '1';
+            }, 100);
+            
+            // Имитация мигающего курсора в конце анимации печатания
+            const typingElement = document.querySelector('.typing-animation');
+            setTimeout(() => {
+                typingElement.style.borderRight = 'none';
+            }, 3500);
+        });
+    </script>
+</body>
+</html>
